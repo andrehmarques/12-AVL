@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿﻿#include <iostream>
 using namespace std;
 
 /* -----------------------------------------------------------
@@ -141,6 +141,15 @@ int fatorBalanceamento(NO* no) {
 }
 
 NO* girarDireita(NO* y) {  
+
+    NO* x = y->esq;
+    NO* t2 = x->dir;
+    x->dir = y;
+    y->esq = t2;
+
+    y->altura = max(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    x->altura = max(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+
    /* Rotação simples à direita  
              y                x  
             / \              / \  
@@ -156,10 +165,19 @@ NO* girarDireita(NO* y) {
    // Passo 5: Retorne o novo nó raiz ('x').  
 
 	// provisoriamente retorna o ponteiro passado como parâmetro
-	return y; 
+	return x; 
 }  
 
-NO* girarEsquerda(NO* x) {  
+NO* girarEsquerda(NO* x) { 
+    
+    NO* y = x->dir;
+    NO* t2 = y->esq;
+    x->dir = t2;
+    y->esq = x;
+
+    y->altura = max(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    x->altura = max(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+
    /* Rotação simples à esquerda  
            x                    y  
           / \                  / \  
@@ -176,7 +194,7 @@ NO* girarEsquerda(NO* x) {
 
 
     // provisoriamente retorna o ponteiro passado como parâmetro
-    return x; 
+    return y; 
 }
 
 NO* insereArvore(NO* no, int valor) {
